@@ -10,7 +10,7 @@ import { ScheduledTable } from '../components/ScheduledTable';
 import { SentTable } from '../components/SentTable';
 import { ComposeModal } from '../components/ComposeModal';
 import { SlackModal } from '../components/SlackModal';
-import { Mail, Sparkles, Server, ArrowRight } from 'lucide-react';
+import { Mail, Sparkles, Zap, ArrowRight, Layers } from 'lucide-react';
 
 export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null);
@@ -35,7 +35,6 @@ export default function Dashboard() {
       try {
         const parsed = JSON.parse(savedUser);
         setUser(parsed);
-        // Refresh profile status from API
         apiService
           .getProfile(parsed.id)
           .then((updated) => {
@@ -43,11 +42,8 @@ export default function Dashboard() {
             localStorage.setItem('reachinbox_user', JSON.stringify(updated));
           })
           .catch(() => {});
-      } catch (e) {
-        // Fallback demo user
-      }
+      } catch (e) {}
     } else {
-      // Auto demo sign in for seamless testing!
       handleGoogleLogin();
     }
   }, []);
@@ -177,7 +173,7 @@ export default function Dashboard() {
   const displayedJobs = getDisplayedJobs();
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-amber-400 selection:text-slate-950">
       {/* Top Header */}
       <Header
         user={user}
@@ -189,30 +185,36 @@ export default function Dashboard() {
 
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-        {/* Welcome / Banner */}
-        <div className="bg-gradient-to-r from-indigo-900/40 via-violet-900/20 to-slate-900 border border-indigo-500/20 rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-2xl">
-          <div className="absolute right-0 top-0 translate-x-12 -translate-y-12 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+        {/* Welcome / Hero Banner */}
+        <div className="bg-gradient-to-r from-amber-950/60 via-orange-950/40 to-slate-900 border border-amber-500/30 rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-2xl">
+          {/* Ambient Glows */}
+          <div className="absolute -right-12 -top-12 w-80 h-80 bg-amber-500/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute left-1/3 -bottom-12 w-64 h-64 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
+
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
-            <div className="space-y-2 max-w-2xl">
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold">
-                <Sparkles className="h-3.5 w-3.5" />
-                <span>BullMQ + Redis Persistent Architecture</span>
+            <div className="space-y-2.5 max-w-2xl">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/40 text-amber-300 text-xs font-bold shadow-sm">
+                <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+                <span>Production-Grade Distributed Email Queue</span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                Full-stack Email Job Scheduler & Dashboard
+              <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-white">
+                Email Job Scheduler &{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-emerald-400">
+                  Analytics Dashboard
+                </span>
               </h1>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                Schedule bulk email campaigns with custom provider throttling, automatic hourly rate-limiting, live Slack notification alerts, and full server restart persistence.
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-medium">
+                Schedule email outreach with custom provider throttling, automatic hourly rate-limit windowing, live Slack notifications, and instant Elasticsearch search.
               </p>
             </div>
 
             <button
               onClick={() => setIsComposeOpen(true)}
-              className="flex items-center space-x-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-semibold text-xs px-5 py-3 rounded-2xl shadow-xl shadow-indigo-600/30 transition transform hover:-translate-y-0.5 active:translate-y-0 shrink-0"
+              className="flex items-center space-x-2 bg-gradient-to-r from-orange-500 via-amber-500 to-emerald-500 hover:from-orange-400 hover:to-emerald-400 text-slate-950 font-extrabold text-xs px-6 py-3.5 rounded-2xl shadow-xl shadow-amber-500/20 transition transform hover:-translate-y-0.5 active:translate-y-0 shrink-0"
             >
-              <Mail className="h-4 w-4" />
-              <span>Compose Campaign</span>
-              <ArrowRight className="h-4 w-4" />
+              <Mail className="h-4 w-4 stroke-[3]" />
+              <span>Compose New Campaign</span>
+              <ArrowRight className="h-4 w-4 stroke-[3]" />
             </button>
           </div>
         </div>
@@ -246,12 +248,13 @@ export default function Dashboard() {
           />
         ) : (
           /* All Jobs view */
-          <div className="space-y-6">
+          <div className="space-y-8">
             <div>
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-bold text-white flex items-center space-x-2">
+              <div className="flex items-center justify-between mb-3.5">
+                <h3 className="text-sm font-black text-white flex items-center space-x-2 tracking-wide uppercase">
+                  <Zap className="h-4 w-4 text-emerald-400 fill-emerald-400/20" />
                   <span>Scheduled & Rate-Limited Jobs</span>
-                  <span className="text-xs font-semibold text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded-full border border-indigo-500/20">
+                  <span className="text-xs font-extrabold text-emerald-300 bg-emerald-500/20 px-2.5 py-0.5 rounded-full border border-emerald-500/40">
                     {scheduledJobs.length}
                   </span>
                 </h3>
@@ -265,10 +268,11 @@ export default function Dashboard() {
             </div>
 
             <div>
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-bold text-white flex items-center space-x-2">
-                  <span>Sent & Delivery Log</span>
-                  <span className="text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+              <div className="flex items-center justify-between mb-3.5">
+                <h3 className="text-sm font-black text-white flex items-center space-x-2 tracking-wide uppercase">
+                  <Layers className="h-4 w-4 text-teal-400" />
+                  <span>Sent & Delivery Audit Log</span>
+                  <span className="text-xs font-extrabold text-teal-300 bg-teal-500/20 px-2.5 py-0.5 rounded-full border border-teal-500/40">
                     {sentJobs.length}
                   </span>
                 </h3>

@@ -3,7 +3,7 @@
 import React, { useState, useRef } from 'react';
 import Papa from 'papaparse';
 import { Sender } from '../types';
-import { X, Upload, Mail, Clock, Zap, Shield, FileText, CheckCircle2, AlertCircle } from 'lucide-react';
+import { X, Upload, Mail, Clock, Zap, Shield, CheckCircle2, AlertCircle } from 'lucide-react';
 
 interface ComposeModalProps {
   isOpen: boolean;
@@ -128,17 +128,17 @@ export function ComposeModal({ isOpen, onClose, onSchedule, senders }: ComposeMo
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl my-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md overflow-y-auto">
+      <div className="bg-slate-900 border border-amber-500/30 rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl my-8">
         {/* Modal Header */}
-        <div className="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/50">
+        <div className="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-gradient-to-r from-amber-950/40 via-orange-950/30 to-slate-900">
           <div className="flex items-center space-x-2.5">
-            <div className="p-2 rounded-xl bg-indigo-500/10 text-indigo-400">
-              <Mail className="h-5 w-5" />
+            <div className="p-2 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-500 text-slate-950 font-bold shadow-md">
+              <Mail className="h-5 w-5 stroke-[2.5]" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-white tracking-tight">Compose New Email Campaign</h2>
-              <p className="text-xs text-slate-400">Schedule multi-recipient emails with automated rate limiting</p>
+              <h2 className="text-base font-extrabold text-white tracking-tight">Compose New Email Campaign</h2>
+              <p className="text-xs text-amber-300 font-medium">Schedule multi-recipient campaigns with provider throttling</p>
             </div>
           </div>
           <button
@@ -152,7 +152,7 @@ export function ComposeModal({ isOpen, onClose, onSchedule, senders }: ComposeMo
         {/* Modal Body / Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           {errorMsg && (
-            <div className="p-3.5 bg-rose-500/10 border border-rose-500/20 rounded-xl text-rose-400 text-xs flex items-center space-x-2">
+            <div className="p-3.5 bg-orange-500/10 border border-orange-500/30 rounded-2xl text-orange-300 text-xs font-semibold flex items-center space-x-2">
               <AlertCircle className="h-4 w-4 shrink-0" />
               <span>{errorMsg}</span>
             </div>
@@ -161,11 +161,11 @@ export function ComposeModal({ isOpen, onClose, onSchedule, senders }: ComposeMo
           {/* Sender Selector */}
           {senders.length > 0 && (
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">Sending Account</label>
+              <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wide">Sending Account</label>
               <select
                 value={selectedSenderId}
                 onChange={(e) => setSelectedSenderId(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 transition"
+                className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-3.5 py-2.5 text-xs font-semibold text-white focus:outline-none focus:border-amber-400 transition"
               >
                 <option value="">Default Ethereal Account (outbound@reachinbox.demo)</option>
                 {senders.map((s) => (
@@ -179,26 +179,26 @@ export function ComposeModal({ isOpen, onClose, onSchedule, senders }: ComposeMo
 
           {/* Subject Input */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">Subject Line</label>
+            <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wide">Subject Line</label>
             <input
               type="text"
-              placeholder="e.g. Quick question regarding Outbox Labs scaling"
+              placeholder="e.g. Quick question regarding ReachInbox Email Job Scheduler"
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition"
+              className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-2.5 text-xs font-medium text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition"
               required
             />
           </div>
 
           {/* Body Textarea */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">Email Body</label>
+            <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wide">Email Body</label>
             <textarea
               rows={4}
               placeholder="Hi {{name}}, I noticed your recent updates on..."
               value={body}
               onChange={(e) => setBody(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition resize-none"
+              className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-2.5 text-xs font-medium text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition resize-none"
               required
             />
           </div>
@@ -206,11 +206,11 @@ export function ComposeModal({ isOpen, onClose, onSchedule, senders }: ComposeMo
           {/* Recipients / File Upload */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="block text-xs font-semibold text-slate-300">
+              <label className="block text-xs font-bold text-slate-300 uppercase tracking-wide">
                 Recipients / Leads (CSV / TXT or Manual paste)
               </label>
               {detectedEmails.length > 0 && (
-                <span className="inline-flex items-center space-x-1 text-[11px] font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                <span className="inline-flex items-center space-x-1 text-[11px] font-extrabold text-emerald-300 bg-emerald-500/20 px-2.5 py-0.5 rounded-full border border-emerald-500/40">
                   <CheckCircle2 className="h-3 w-3" />
                   <span>{detectedEmails.length} Emails Detected</span>
                 </span>
@@ -223,7 +223,7 @@ export function ComposeModal({ isOpen, onClose, onSchedule, senders }: ComposeMo
                 placeholder="Paste email addresses separated by commas or lines..."
                 value={recipientsInput}
                 onChange={handleTextareaChange}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition resize-none font-mono text-[11px]"
+                className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-2.5 text-xs font-mono text-emerald-300 placeholder-slate-500 focus:outline-none focus:border-amber-400 transition resize-none text-[11px]"
               />
 
               {/* Upload CSV / File Button */}
@@ -238,9 +238,9 @@ export function ComposeModal({ isOpen, onClose, onSchedule, senders }: ComposeMo
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="flex items-center space-x-1.5 bg-slate-800/80 hover:bg-slate-800 text-slate-300 text-xs font-medium px-3 py-1.5 rounded-lg border border-slate-700 transition"
+                  className="flex items-center space-x-2 bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500/30 hover:to-orange-500/30 text-amber-300 text-xs font-bold px-3.5 py-2 rounded-xl border border-amber-500/40 transition shadow-sm"
                 >
-                  <Upload className="h-3.5 w-3.5 text-indigo-400" />
+                  <Upload className="h-4 w-4 text-amber-400" />
                   <span>{fileFileName ? `Uploaded: ${fileFileName}` : 'Upload CSV / Text Lead List'}</span>
                 </button>
                 {fileFileName && (
@@ -251,7 +251,7 @@ export function ComposeModal({ isOpen, onClose, onSchedule, senders }: ComposeMo
                       setRecipientsInput('');
                       setDetectedEmails([]);
                     }}
-                    className="text-[11px] text-rose-400 hover:underline"
+                    className="text-[11px] font-bold text-orange-400 hover:underline"
                   >
                     Clear file
                   </button>
@@ -261,26 +261,26 @@ export function ComposeModal({ isOpen, onClose, onSchedule, senders }: ComposeMo
           </div>
 
           {/* Schedule Settings: Start Time, Delay, Hourly Limit */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-slate-800/80">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-slate-800">
             {/* Start Time */}
             <div>
-              <label className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center space-x-1">
-                <Clock className="h-3 w-3 text-indigo-400" />
+              <label className="block text-[11px] font-bold text-amber-300 mb-1 flex items-center space-x-1">
+                <Clock className="h-3.5 w-3.5 text-amber-400" />
                 <span>Start Time</span>
               </label>
               <input
                 type="datetime-local"
                 value={scheduledAt}
                 onChange={(e) => setScheduledAt(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 transition"
+                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs font-semibold text-white focus:outline-none focus:border-amber-400 transition"
               />
-              <span className="text-[10px] text-slate-500">Leave blank to start immediately</span>
+              <span className="text-[10px] text-slate-400">Leave blank for instant send</span>
             </div>
 
             {/* Delay Between Emails */}
             <div>
-              <label className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center space-x-1">
-                <Zap className="h-3 w-3 text-amber-400" />
+              <label className="block text-[11px] font-bold text-emerald-300 mb-1 flex items-center space-x-1">
+                <Zap className="h-3.5 w-3.5 text-emerald-400" />
                 <span>Delay Between Sends</span>
               </label>
               <div className="relative">
@@ -290,17 +290,17 @@ export function ComposeModal({ isOpen, onClose, onSchedule, senders }: ComposeMo
                   max={60}
                   value={delayBetweenEmailsSec}
                   onChange={(e) => setDelayBetweenEmailsSec(Number(e.target.value))}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 transition"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs font-semibold text-white focus:outline-none focus:border-emerald-400 transition"
                 />
-                <span className="absolute right-3 top-1.5 text-[10px] text-slate-500">sec</span>
+                <span className="absolute right-3 top-2 text-[10px] font-bold text-slate-500">sec</span>
               </div>
-              <span className="text-[10px] text-slate-500">Provider throttling</span>
+              <span className="text-[10px] text-slate-400">Provider throttling</span>
             </div>
 
             {/* Hourly Rate Limit */}
             <div>
-              <label className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center space-x-1">
-                <Shield className="h-3 w-3 text-emerald-400" />
+              <label className="block text-[11px] font-bold text-orange-300 mb-1 flex items-center space-x-1">
+                <Shield className="h-3.5 w-3.5 text-orange-400" />
                 <span>Hourly Rate Limit</span>
               </label>
               <input
@@ -309,9 +309,9 @@ export function ComposeModal({ isOpen, onClose, onSchedule, senders }: ComposeMo
                 max={10000}
                 value={hourlyLimit}
                 onChange={(e) => setHourlyLimit(Number(e.target.value))}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 transition"
+                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs font-semibold text-white focus:outline-none focus:border-orange-400 transition"
               />
-              <span className="text-[10px] text-slate-500">Max emails / hr / sender</span>
+              <span className="text-[10px] text-slate-400">Max emails / hr / sender</span>
             </div>
           </div>
 
@@ -320,23 +320,23 @@ export function ComposeModal({ isOpen, onClose, onSchedule, senders }: ComposeMo
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition"
+              className="px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex items-center space-x-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-semibold text-xs px-5 py-2.5 rounded-xl shadow-lg shadow-indigo-600/25 transition disabled:opacity-50"
+              className="flex items-center space-x-2 bg-gradient-to-r from-orange-500 via-amber-500 to-emerald-500 hover:from-orange-400 hover:to-emerald-400 text-slate-950 font-extrabold text-xs px-6 py-2.5 rounded-xl shadow-lg shadow-amber-500/25 transition disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>
-                  <div className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+                  <div className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-slate-950 border-t-transparent"></div>
                   <span>Scheduling Jobs...</span>
                 </>
               ) : (
                 <>
-                  <Mail className="h-4 w-4" />
+                  <Mail className="h-4 w-4 stroke-[3]" />
                   <span>Schedule {detectedEmails.length > 0 ? `${detectedEmails.length} Emails` : 'Campaign'}</span>
                 </>
               )}

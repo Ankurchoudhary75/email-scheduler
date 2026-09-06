@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, MessageSquare, ExternalLink, CheckCircle2, AlertCircle, Send } from 'lucide-react';
+import { X, MessageSquare, ExternalLink, CheckCircle2, AlertCircle, Send, ShieldAlert } from 'lucide-react';
 import { apiService } from '../lib/api';
 
 interface SlackModalProps {
@@ -69,17 +69,17 @@ export function SlackModal({ isOpen, onClose, userId, isSlackConnected, onSucces
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md">
+      <div className="bg-slate-900 border border-emerald-500/30 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/50">
+        <div className="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-gradient-to-r from-emerald-950/40 via-teal-950/30 to-slate-900">
           <div className="flex items-center space-x-2.5">
-            <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400">
-              <MessageSquare className="h-5 w-5" />
+            <div className="p-2 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-500 text-slate-950 font-bold shadow-md">
+              <MessageSquare className="h-5 w-5 stroke-[2.5]" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-white tracking-tight">Slack Rate Limit Alerts</h2>
-              <p className="text-xs text-slate-400">Receive live alerts when hourly send limits are triggered</p>
+              <h2 className="text-base font-extrabold text-white tracking-tight">Slack Rate Limit Notifications</h2>
+              <p className="text-xs text-emerald-300 font-medium">Receive live alerts when hourly send limits are triggered</p>
             </div>
           </div>
           <button
@@ -94,41 +94,41 @@ export function SlackModal({ isOpen, onClose, userId, isSlackConnected, onSucces
         <div className="p-6 space-y-5">
           {msg && (
             <div
-              className={`p-3.5 rounded-xl text-xs flex items-center space-x-2 border ${
+              className={`p-3.5 rounded-2xl text-xs font-semibold flex items-center space-x-2 border ${
                 msg.type === 'success'
-                  ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-                  : 'bg-rose-500/10 border-rose-500/20 text-rose-400'
+                  ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300'
+                  : 'bg-orange-500/20 border-orange-500/40 text-orange-300'
               }`}
             >
-              {msg.type === 'success' ? <CheckCircle2 className="h-4 w-4 shrink-0" /> : <AlertCircle className="h-4 w-4 shrink-0" />}
+              {msg.type === 'success' ? <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" /> : <AlertCircle className="h-4 w-4 shrink-0 text-orange-400" />}
               <span>{msg.text}</span>
             </div>
           )}
 
           {isSlackConnected ? (
             <div className="space-y-4">
-              <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-center space-y-2">
-                <CheckCircle2 className="h-8 w-8 text-emerald-400 mx-auto" />
-                <h3 className="text-sm font-semibold text-white">Slack Notifications Connected</h3>
-                <p className="text-xs text-slate-400">
-                  Live alerts will automatically post to your Slack channel when rate limits are exceeded.
+              <div className="p-5 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl text-center space-y-2">
+                <CheckCircle2 className="h-10 w-10 text-emerald-400 mx-auto animate-bounce" />
+                <h3 className="text-sm font-extrabold text-white">Slack Notifications Connected!</h3>
+                <p className="text-xs text-slate-300 leading-relaxed font-medium">
+                  Live alerts will automatically post to your Slack channel the moment a rate limit is exceeded.
                 </p>
               </div>
 
               <button
                 onClick={handleDisconnect}
                 disabled={loading}
-                className="w-full py-2.5 bg-rose-500/10 border border-rose-500/20 hover:bg-rose-500/20 text-rose-400 text-xs font-semibold rounded-xl transition"
+                className="w-full py-2.5 bg-orange-500/10 border border-orange-500/30 hover:bg-orange-500/20 text-orange-300 text-xs font-bold rounded-xl transition"
               >
                 Disconnect Slack
               </button>
             </div>
           ) : (
             <>
-              {/* Method 1: Incoming Webhook (Instant live testing) */}
-              <form onSubmit={handleSaveWebhook} className="space-y-3">
+              {/* Method 1: Incoming Webhook */}
+              <form onSubmit={handleSaveWebhook} className="space-y-3.5">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">
+                  <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wide">
                     Slack Incoming Webhook URL
                   </label>
                   <input
@@ -136,32 +136,32 @@ export function SlackModal({ isOpen, onClose, userId, isSlackConnected, onSucces
                     placeholder="https://hooks.slack.com/services/T00/B00/XXX"
                     value={webhookUrl}
                     onChange={(e) => setWebhookUrl(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition font-mono text-[11px]"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-2.5 text-xs font-mono text-emerald-300 placeholder-slate-500 focus:outline-none focus:border-emerald-400 transition text-[11px]"
                     required
                   />
-                  <span className="text-[10px] text-slate-500 mt-1 block">
-                    Provides instant verification without creating a public Slack App registration.
+                  <span className="text-[10px] font-medium text-slate-400 mt-1 block">
+                    Provides instant verification without requiring a public Slack App registration.
                   </span>
                 </div>
 
                 <div className="flex items-center space-x-3">
                   <div className="flex-1">
-                    <label className="block text-[11px] font-medium text-slate-400 mb-1">Channel Name</label>
+                    <label className="block text-[11px] font-bold text-slate-400 mb-1 uppercase">Channel Name</label>
                     <input
                       type="text"
                       placeholder="e.g. #email-alerts"
                       value={channel}
                       onChange={(e) => setChannel(e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 transition"
+                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs font-semibold text-white focus:outline-none focus:border-emerald-400 transition"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={loading}
-                    className="mt-5 flex items-center space-x-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2 rounded-xl transition disabled:opacity-50"
+                    className="mt-5 flex items-center space-x-1.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 text-xs font-extrabold px-4 py-2.5 rounded-xl transition shadow-md disabled:opacity-50"
                   >
-                    <Send className="h-3.5 w-3.5" />
+                    <Send className="h-3.5 w-3.5 stroke-[2.5]" />
                     <span>Save & Test</span>
                   </button>
                 </div>
@@ -169,7 +169,7 @@ export function SlackModal({ isOpen, onClose, userId, isSlackConnected, onSucces
 
               <div className="relative flex py-1 items-center">
                 <div className="flex-grow border-t border-slate-800"></div>
-                <span className="flex-shrink mx-3 text-[10px] font-semibold text-slate-500 uppercase">Or</span>
+                <span className="flex-shrink mx-3 text-[10px] font-bold text-slate-500 uppercase">Or</span>
                 <div className="flex-grow border-t border-slate-800"></div>
               </div>
 
@@ -177,11 +177,11 @@ export function SlackModal({ isOpen, onClose, userId, isSlackConnected, onSucces
               <button
                 type="button"
                 onClick={handleOAuthConnect}
-                className="w-full flex items-center justify-center space-x-2 bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-200 text-xs font-semibold py-2.5 rounded-xl transition"
+                className="w-full flex items-center justify-center space-x-2 bg-slate-950 hover:bg-slate-800/80 border border-slate-800 text-slate-200 text-xs font-extrabold py-3 rounded-2xl transition"
               >
                 <MessageSquare className="h-4 w-4 text-emerald-400" />
-                <span>Connect via Slack OAuth 2.0</span>
-                <ExternalLink className="h-3.5 w-3.5 text-slate-500" />
+                <span>Connect via Slack OAuth 2.0 Flow</span>
+                <ExternalLink className="h-3.5 w-3.5 text-slate-400" />
               </button>
             </>
           )}
