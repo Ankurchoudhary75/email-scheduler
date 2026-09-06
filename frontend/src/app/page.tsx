@@ -10,7 +10,8 @@ import { ScheduledTable } from '../components/ScheduledTable';
 import { SentTable } from '../components/SentTable';
 import { ComposeModal } from '../components/ComposeModal';
 import { SlackModal } from '../components/SlackModal';
-import { Mail, Sparkles, Zap, ArrowRight, Layers } from 'lucide-react';
+import { LoginModal } from '../components/LoginModal';
+import { Mail, Sparkles, Zap, ArrowRight, Layers, Send } from 'lucide-react';
 
 export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null);
@@ -27,6 +28,7 @@ export default function Dashboard() {
 
   const [isComposeOpen, setIsComposeOpen] = useState(false);
   const [isSlackOpen, setIsSlackOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   // Initialize or fetch User
   useEffect(() => {
@@ -44,17 +46,17 @@ export default function Dashboard() {
           .catch(() => {});
       } catch (e) {}
     } else {
-      handleGoogleLogin();
-    }
-  }, []);
-
-  const handleGoogleLogin = async () => {
-    try {
-      const res = await apiService.googleLogin({
+      handlePerformLogin({
         email: 'ankur.demo@reachinbox.ai',
         name: 'Ankur Choudhary',
         avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=256',
       });
+    }
+  }, []);
+
+  const handlePerformLogin = async (userData: { email: string; name?: string; avatarUrl?: string }) => {
+    try {
+      const res = await apiService.googleLogin(userData);
       setUser(res.user);
       localStorage.setItem('reachinbox_user', JSON.stringify(res.user));
     } catch (err) {
@@ -177,7 +179,7 @@ export default function Dashboard() {
       {/* Top Header */}
       <Header
         user={user}
-        onLogin={handleGoogleLogin}
+        onLogin={() => setIsLoginOpen(true)}
         onLogout={handleLogout}
         onOpenCompose={() => setIsComposeOpen(true)}
         onOpenSlackModal={() => setIsSlackOpen(true)}
@@ -208,14 +210,35 @@ export default function Dashboard() {
               </p>
             </div>
 
-            <button
-              onClick={() => setIsComposeOpen(true)}
-              className="flex items-center space-x-2 bg-gradient-to-r from-orange-500 via-amber-500 to-emerald-500 hover:from-orange-400 hover:to-emerald-400 text-slate-950 font-extrabold text-xs px-6 py-3.5 rounded-2xl shadow-xl shadow-amber-500/20 transition transform hover:-translate-y-0.5 active:translate-y-0 shrink-0"
-            >
-              <Mail className="h-4 w-4 stroke-[3]" />
-              <span>Compose New Campaign</span>
-              <ArrowRight className="h-4 w-4 stroke-[3]" />
-            </button>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+              <button
+                type="button"
+                onClick={() => setIsComposeOpen(true)}
+                className="flex items-center justify-center space-x-2 bg-gradient-to-r from-orange-500 via-amber-500 to-emerald-500 hover:from-orange-400 hover:to-emerald-400 text-slate-950 font-extrabold text-xs px-6 py-3.5 rounded-2xl shadow-xl shadow-amber-500/20 transition cursor-pointer transform hover:-translate-y-0.5 active:translate-y-0"
+              >
+                <Mail className="h-4 w-4 stroke-[3]" />
+                <span>Compose New Campaign</span>
+                <ArrowRight className="h-4 w-4 stroke-[3]" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() =>
+                  handleScheduleCampaign({
+                    subject: '🚀 Welcome to ReachInbox Outbound Demo',
+                    body: '<h1>Hello!</h1><p>This is an automated test campaign sent through BullMQ with Redis persistence and Ethereal SMTP transport.</p>',
+                    recipients: ['sarah.demo@acmecorp.io', 'alex.tester@enterprise.dev'],
+                    delayBetweenEmailsSec: 2,
+                    hourlyLimit: 200,
+                  })
+                }
+                className="flex items-center justify-center space-x-1.5 bg-slate-900/90 hover:bg-slate-800 text-amber-300 border border-amber-500/30 hover:border-amber-400 font-bold text-xs px-4 py-3.5 rounded-2xl transition cursor-pointer shadow-md"
+                title="1-Click Quick Demo"
+              >
+                <Send className="h-3.5 w-3.5 text-amber-400" />
+                <span>⚡ 1-Click Test (2 Leads)</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -293,6 +316,14 @@ export default function Dashboard() {
         onClose={() => setIsComposeOpen(false)}
         onSchedule={handleScheduleCampaign}
         senders={senders}
+      />
+
+      {/* Google Sign In / Switch User Modal */}
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+        onLogin={handlePerformLogin}
+        currentUser={user}
       />
 
       {/* Slack Connection Modal */}

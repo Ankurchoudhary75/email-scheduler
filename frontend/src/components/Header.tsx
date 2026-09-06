@@ -94,18 +94,26 @@ export function Header({ user, onLogin, onLogout, onOpenCompose, onOpenSlackModa
           {/* User Info / Login */}
           {user ? (
             <div className="flex items-center space-x-3 border-l border-slate-800 pl-3 sm:pl-4">
-              <img
-                src={user.avatarUrl}
-                alt={user.name}
-                className="h-8 w-8 rounded-full border-2 border-amber-400/60 object-cover shadow-sm"
-              />
-              <div className="hidden lg:block text-left">
-                <p className="text-xs font-bold text-white leading-tight">{user.name}</p>
-                <p className="text-[11px] font-medium text-emerald-400 leading-tight">{user.email}</p>
-              </div>
               <button
+                type="button"
+                onClick={onLogin}
+                className="flex items-center space-x-2.5 hover:opacity-80 transition cursor-pointer text-left group"
+                title="Click to Switch Google Account"
+              >
+                <img
+                  src={user.avatarUrl}
+                  alt={user.name}
+                  className="h-8 w-8 rounded-full border-2 border-amber-400/60 object-cover shadow-sm group-hover:border-amber-300"
+                />
+                <div className="hidden lg:block text-left">
+                  <p className="text-xs font-bold text-white leading-tight group-hover:text-amber-300 transition">{user.name}</p>
+                  <p className="text-[11px] font-medium text-emerald-400 leading-tight">{user.email}</p>
+                </div>
+              </button>
+              <button
+                type="button"
                 onClick={onLogout}
-                className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-xl transition"
+                className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-xl transition cursor-pointer"
                 title="Log out"
               >
                 <LogOut className="h-4 w-4" />
@@ -113,8 +121,9 @@ export function Header({ user, onLogin, onLogout, onOpenCompose, onOpenSlackModa
             </div>
           ) : (
             <button
+              type="button"
               onClick={onLogin}
-              className="flex items-center space-x-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl transition shadow-md"
+              className="flex items-center space-x-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl transition shadow-md cursor-pointer transform hover:-translate-y-0.5 active:translate-y-0"
             >
               <UserIcon className="h-4 w-4" />
               <span>Google Sign In</span>
