@@ -59,9 +59,19 @@ export default function Dashboard() {
       const res = await apiService.googleLogin(userData);
       setUser(res.user);
       localStorage.setItem('reachinbox_user', JSON.stringify(res.user));
+      return res.user;
     } catch (err) {
       console.error('Login error:', err);
+      return null;
     }
+  };
+
+  const handleGoogleLogin = async () => {
+    return handlePerformLogin({
+      email: 'ankur.demo@reachinbox.ai',
+      name: 'Ankur Choudhary',
+      avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=256',
+    });
   };
 
   const handleLogout = () => {
