@@ -1,9 +1,9 @@
 # 🚀 ReachInbox Full-stack Email Job Scheduler & Dashboard
 
-> 🌐 **Live Public Links (Active Tunnels)**:
-> - **Frontend Dashboard**: [https://calm-fans-hear.loca.lt](https://calm-fans-hear.loca.lt) *(Tunnel Password / IP if prompted: `38.183.60.232`)*
-> - **Backend API Service**: [https://sour-lizards-film.loca.lt](https://sour-lizards-film.loca.lt)
-> - **Live BullMQ Queue UI**: [https://sour-lizards-film.loca.lt/admin/queues](https://sour-lizards-film.loca.lt/admin/queues)
+> 🌐 **Live Public Links (Active High-Speed Cloudflare Tunnels)**:
+> - **Frontend Dashboard**: [https://pushing-hash-scotia-consortium.trycloudflare.com](https://pushing-hash-scotia-consortium.trycloudflare.com)
+> - **Backend API Service**: [https://downloads-boulder-pirates-rebecca.trycloudflare.com](https://downloads-boulder-pirates-rebecca.trycloudflare.com)
+> - **Live BullMQ Queue UI**: [https://downloads-boulder-pirates-rebecca.trycloudflare.com/admin/queues](https://downloads-boulder-pirates-rebecca.trycloudflare.com/admin/queues)
 
 A production-grade, high-throughput **Email Scheduler Service and Frontend Dashboard** built for ReachInbox hiring assignment requirements.
 
