@@ -40,9 +40,119 @@ app.use('/api/emails', emailRoutes);
 app.use('/api/slack', slackRoutes);
 app.use('/api/stats', statsRoutes);
 
+app.get('/', (req, res) => {
+  if (req.accepts('html')) {
+    res.send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReachInbox Email Scheduler Backend API</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #0b0f19;
+      color: #e2e8f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .card {
+      background: linear-gradient(145deg, #131b2e, #1e293b);
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 36px;
+      max-width: 580px;
+      width: 100%;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid #10b981;
+      color: #34d399;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      background-color: #10b981;
+      border-radius: 50%;
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+    h1 { margin: 0 0 10px; font-size: 24px; color: #f8fafc; }
+    p { margin: 0 0 24px; color: #94a3b8; font-size: 15px; line-height: 1.5; }
+    .links { display: flex; flex-direction: column; gap: 12px; }
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    .btn:hover {
+      background: #1e293b;
+      border-color: #38bdf8;
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="badge"><span class="dot"></span> ReachInbox Backend API is Live</div>
+    <h1>Email Scheduler Service</h1>
+    <p>Node.js &bull; Express TypeScript &bull; BullMQ + Redis &bull; PostgreSQL &bull; Elasticsearch</p>
+    <div class="links">
+      <a class="btn" href="/admin/queues">
+        <span>📊 <strong>BullBoard Queue UI</strong></span>
+        <span>/admin/queues &rarr;</span>
+      </a>
+      <a class="btn" href="/api/stats">
+        <span>📈 <strong>API Stats & Health</strong></span>
+        <span>/api/stats &rarr;</span>
+      </a>
+      <a class="btn" href="https://pushing-hash-scotia-consortium.trycloudflare.com" target="_blank">
+        <span>🖥️ <strong>Open Frontend Dashboard</strong></span>
+        <span>Open App &rarr;</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>`);
+    return;
+  }
+  res.json({
+    name: 'ReachInbox Email Scheduler Service',
+    status: 'ok',
+    version: '1.0.0',
+    bullBoard: '/admin/queues',
+    stats: '/api/stats',
+    timestamp: new Date().toISOString(),
+  });
+});
+
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
+
 
 async function bootstrap() {
   try {
