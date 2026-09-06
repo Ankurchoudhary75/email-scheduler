@@ -1,5 +1,10 @@
 # 🚀 ReachInbox Full-stack Email Job Scheduler & Dashboard
 
+> 🌐 **Live Public Links (Active Tunnels)**:
+> - **Frontend Dashboard**: [https://calm-fans-hear.loca.lt](https://calm-fans-hear.loca.lt) *(Tunnel Password / IP if prompted: `38.183.60.232`)*
+> - **Backend API Service**: [https://sour-lizards-film.loca.lt](https://sour-lizards-film.loca.lt)
+> - **Live BullMQ Queue UI**: [https://sour-lizards-film.loca.lt/admin/queues](https://sour-lizards-film.loca.lt/admin/queues)
+
 A production-grade, high-throughput **Email Scheduler Service and Frontend Dashboard** built for ReachInbox hiring assignment requirements.
 
 Powered by **Node.js/Express (TypeScript)**, **BullMQ + Redis**, **PostgreSQL (Prisma ORM)**, **Elasticsearch**, **Ethereal Fake SMTP**, **Slack OAuth / Live Webhooks**, and a modern **Next.js 14 + Tailwind CSS** frontend.
