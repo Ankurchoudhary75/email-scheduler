@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: [
+    "pushing-hash-scotia-consortium.trycloudflare.com",
+    "*.trycloudflare.com",
+    "localhost:3000",
+    "127.0.0.1:3000",
+  ],
   async rewrites() {
     return [
       {
@@ -16,4 +22,5 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
 
