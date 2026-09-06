@@ -42,7 +42,7 @@ export function Header({ user, onLogin, onLogout, onOpenCompose, onOpenSlackModa
         <div className="flex items-center space-x-3 sm:space-x-4">
           {/* BullBoard Queue Link */}
           <a
-            href="http://localhost:4000/admin/queues"
+            href="/admin/queues"
             target="_blank"
             rel="noreferrer"
             className="hidden md:flex items-center space-x-1.5 text-xs font-semibold text-amber-300 hover:text-white bg-slate-900/90 border border-amber-500/30 px-3.5 py-2 rounded-xl hover:border-amber-400 hover:bg-amber-500/10 transition shadow-sm"
