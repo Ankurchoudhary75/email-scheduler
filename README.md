@@ -108,36 +108,35 @@ Powered by **Node.js/Express (TypeScript)**, **BullMQ + Redis**, **PostgreSQL (P
 
 ---
 
-## 🛠️ Quick Start & Local Setup
+## 🛠️ Quick Start & 1-Click Automated Setup
 
-### Prerequisites
-- **Node.js**: v18+ (Tested on v25.2.1)
-- **Docker Desktop**: Docker Compose v2+
+### ⚡ 1-Click Start (Automatic Docker & Server Handling)
+You don't need to manually start Docker or run multiple terminal tabs. The integrated startup script automatically checks, launches Docker Desktop (if stopped), boots up containers, runs database checks, and starts both frontend and backend:
 
-### 1. Clone & Start Docker Infrastructure
 ```bash
 git clone https://github.com/Ankurchoudhary75/email-scheduler.git
 cd "email-scheduler"
 
-# Start PostgreSQL (5433), Redis (6379), Elasticsearch (9200)
-docker compose up -d
+# 1-Click Automated Startup
+./start.sh
+# OR
+npm start
 ```
 
-### 2. Backend Setup
-```bash
-cd backend
-npm install
+### Manual Individual Step-by-Step (Optional)
 
-# Run Prisma Database Migrations
-npx prisma db push
-
-# Start Backend Server in Dev Mode (Port 4000)
-npm run dev
-```
-
-The backend server runs at `http://localhost:4000`.
-- **BullBoard Queue Dashboard**: `http://localhost:4000/admin/queues`
-- **Health Check**: `http://localhost:4000/health`
+1. **Start Infrastructure**:
+   ```bash
+   docker compose up -d
+   ```
+2. **Backend**:
+   ```bash
+   cd backend && npm install && npx prisma db push && npm run dev
+   ```
+3. **Frontend**:
+   ```bash
+   cd frontend && npm install && npm run dev
+   ```
 
 ### 3. Frontend Setup
 Open a new terminal window:

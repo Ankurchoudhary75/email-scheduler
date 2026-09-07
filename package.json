@@ -1,0 +1,24 @@
+{
+  "name": "reachinbox-email-scheduler-root",
+  "version": "1.0.0",
+  "description": "ReachInbox Full-stack Email Job Scheduler & Dashboard",
+  "scripts": {
+    "infra:up": "docker compose up -d",
+    "infra:down": "docker compose down",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev": "npm run infra:up && (cd backend && npm run dev & cd frontend && npm run dev)",
+    "build": "cd backend && npm run build && cd ../frontend && npm run build",
+    "start": "./start.sh"
+  },
+  "keywords": [
+    "email-scheduler",
+    "bullmq",
+    "redis",
+    "postgresql",
+    "nextjs",
+    "express"
+  ],
+  "author": "Ankur Choudhary",
+  "license": "MIT"
+}

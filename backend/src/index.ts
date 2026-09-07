@@ -154,23 +154,36 @@ app.get('/health', (req, res) => {
 });
 
 
+import { ensureInfrastructureRunning } from './services/dockerGuardian';
+
 async function bootstrap() {
   try {
+    // 0. Automatically check and start Docker containers if stopped
+    await ensureInfrastructureRunning();
+
     // 1. Init Elasticsearch index
-    await initElasticsearch();
+    try {
+      await initElasticsearch();
+    } catch (err: any) {
+      console.warn('[Bootstrap] Elasticsearch initialization notice (running fallback search):', err.message);
+    }
 
     // 2. Ensure seed default sender exists in Database
-    const count = await prisma.sender.count();
-    if (count === 0) {
-      await prisma.sender.create({
-        data: {
-          email: 'outbound@reachinbox.demo',
-          name: 'ReachInbox Outbound Dispatcher',
-          hourlyLimit: parseInt(process.env.DEFAULT_HOURLY_LIMIT || '200', 10),
-          minDelayMs: parseInt(process.env.DEFAULT_MIN_DELAY_MS || '2000', 10),
-        },
-      });
-      console.log('[Bootstrap] Created default Ethereal sender: outbound@reachinbox.demo');
+    try {
+      const count = await prisma.sender.count();
+      if (count === 0) {
+        await prisma.sender.create({
+          data: {
+            email: 'outbound@reachinbox.demo',
+            name: 'ReachInbox Outbound Dispatcher',
+            hourlyLimit: parseInt(process.env.DEFAULT_HOURLY_LIMIT || '200', 10),
+            minDelayMs: parseInt(process.env.DEFAULT_MIN_DELAY_MS || '2000', 10),
+          },
+        });
+        console.log('[Bootstrap] Created default Ethereal sender: outbound@reachinbox.demo');
+      }
+    } catch (err: any) {
+      console.warn('[Bootstrap] Database seed notice:', err.message);
     }
 
     app.listen(port, () => {
@@ -181,8 +194,7 @@ async function bootstrap() {
       console.log(`====================================================`);
     });
   } catch (error) {
-    console.error('[Bootstrap] Server initialization failed:', error);
-    process.exit(1);
+    console.error('[Bootstrap] Server initialization error:', error);
   }
 }
 
