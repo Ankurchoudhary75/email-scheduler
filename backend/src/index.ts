@@ -9,7 +9,7 @@ dotenv.config();
 
 import { prisma } from './config/prisma';
 import { initElasticsearch } from './services/searchService';
-import { emailQueue } from './queues/emailQueue';
+import { emailQueue, bullQueueInstance } from './queues/emailQueue';
 
 import authRoutes from './routes/authRoutes';
 import emailRoutes from './routes/emailRoutes';
@@ -27,10 +27,14 @@ app.use(express.urlencoded({ extended: true }));
 const serverAdapter = new ExpressAdapter();
 serverAdapter.setBasePath('/admin/queues');
 
-createBullBoard({
-  queues: [new BullMQAdapter(emailQueue as any) as any],
-  serverAdapter,
-});
+try {
+  if (bullQueueInstance) {
+    createBullBoard({
+      queues: [new BullMQAdapter(bullQueueInstance as any) as any],
+      serverAdapter,
+    });
+  }
+} catch (e) {}
 
 app.use('/admin/queues', serverAdapter.getRouter());
 

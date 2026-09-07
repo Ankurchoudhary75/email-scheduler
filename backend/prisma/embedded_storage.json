@@ -1,0 +1,61 @@
+{
+  "users": [
+    {
+      "id": "2500ca3d-f237-48af-8ca7-85de2bef3da9",
+      "email": "ankur.demo@reachinbox.ai",
+      "name": "Ankur Choudhary",
+      "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=256",
+      "googleId": "google-demo-default",
+      "createdAt": "2026-09-07T08:42:19.759Z",
+      "updatedAt": "2026-09-07T08:42:19.759Z"
+    },
+    {
+      "id": "user-zero-docker-1",
+      "email": "user-zero-docker-1@demo.local",
+      "name": "Demo User",
+      "createdAt": "2026-09-07T08:43:04.582Z",
+      "updatedAt": "2026-09-07T08:43:04.582Z"
+    }
+  ],
+  "senders": [
+    {
+      "id": "default-sender-1",
+      "email": "outbound@reachinbox.demo",
+      "name": "ReachInbox Outbound Dispatcher",
+      "hourlyLimit": 200,
+      "minDelayMs": 1000,
+      "createdAt": "2026-09-07T08:42:19.759Z",
+      "etherealUser": "yhwzn7qral7rkfia@ethereal.email",
+      "etherealPass": "YmYmnREb2mTayJP9mx"
+    }
+  ],
+  "emailJobs": [
+    {
+      "id": "job-1788770584583-ksifdg",
+      "status": "SENT",
+      "attempts": {
+        "increment": 1
+      },
+      "userId": "user-zero-docker-1",
+      "senderId": "default-sender-1",
+      "recipient": "zero.docker.lead@example.com",
+      "subject": "Testing Zero-Docker Email Scheduler",
+      "body": "This email was scheduled without needing Docker running!",
+      "scheduledAt": "2026-09-07T08:43:04.582Z",
+      "createdAt": "2026-09-07T08:43:04.583Z",
+      "updatedAt": "2026-09-07T08:43:10.910Z",
+      "jobId": "job-1788770584583-ksifdg",
+      "sentAt": "2026-09-07T08:43:10.910Z",
+      "etherealPreviewUrl": "https://ethereal.email/message/ap55GqpIpkHS9q9Qap55H2NZ89.4zDr3AAAAAVZeOFgDMhXDMseUNHCRMb4",
+      "error": null
+    }
+  ],
+  "rateLimitLogs": [
+    {
+      "id": "log-1788770598130",
+      "senderId": "default-sender-1",
+      "hourWindow": "2026-09-07-08",
+      "count": 1
+    }
+  ]
+}
