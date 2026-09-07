@@ -1,9 +1,9 @@
 # 🚀 ReachInbox Full-stack Email Job Scheduler & Dashboard
 
 > 🌐 **Live Public Links (Active High-Speed Cloudflare Tunnels)**:
-> - **Frontend Dashboard**: [https://contribution-unto-clusters-feof.trycloudflare.com](https://contribution-unto-clusters-feof.trycloudflare.com)
-> - **Backend API Service**: [https://aids-contacted-contracting-entitled.trycloudflare.com](https://aids-contacted-contracting-entitled.trycloudflare.com)
-> - **Live BullMQ Queue UI**: [https://contribution-unto-clusters-feof.trycloudflare.com/admin/queues](https://contribution-unto-clusters-feof.trycloudflare.com/admin/queues)
+> - **Frontend Dashboard**: [https://composed-wave-static-hay.trycloudflare.com](https://composed-wave-static-hay.trycloudflare.com)
+> - **Backend API Service**: [https://matrix-healthcare-chemistry-gender.trycloudflare.com](https://matrix-healthcare-chemistry-gender.trycloudflare.com)
+> - **Live BullMQ Queue UI**: [https://composed-wave-static-hay.trycloudflare.com/admin/queues](https://composed-wave-static-hay.trycloudflare.com/admin/queues)
 
 A production-grade, high-throughput **Email Scheduler Service and Frontend Dashboard** built for ReachInbox hiring assignment requirements.
 

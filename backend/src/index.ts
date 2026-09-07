@@ -133,7 +133,7 @@ app.get('/', (req, res) => {
         <span>📈 <strong>API Stats & Health</strong></span>
         <span>/api/stats &rarr;</span>
       </a>
-      <a class="btn" href="https://contribution-unto-clusters-feof.trycloudflare.com" target="_blank">
+      <a class="btn" href="https://composed-wave-static-hay.trycloudflare.com" target="_blank">
         <span>🖥️ <strong>Open Frontend Dashboard</strong></span>
         <span>Open App &rarr;</span>
       </a>
